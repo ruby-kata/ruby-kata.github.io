@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kata</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.css">
+        <link rel="stylesheet" href="./codekata.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.js"></script>
+        <script src="https://codemirror.net/mode/ruby/ruby.js"></script>
+        <script type="module">
+            import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.5.0/dist/browser/+esm";
+            import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+
+            window.Stimulus = Application.start()
+
+            Stimulus.register("codekata", class extends Controller {
+                connect() {
+                    this.setup()
+                }
+
+                async setup() {
+                    console.log(document.getElementById('editor'))
+                    console.log(CodeMirror)
+                    this.editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+                        mode: "ruby",
+                        lineNumbers: true,
+                    });
+                    this.editor.setValue(`# code-kata
+class Array
+  def sort_by_least_frequency
+  end
+  
+  def sort_by_most_frequency
+  end
+end                    
+                    `)
+                
+                    const response = await fetch("https://cdn.jsdelivr.net/npm/@ruby/3.3-wasm-wasi@2.5.0/dist/ruby+stdlib.wasm");
+                    const module = await WebAssembly.compileStreaming(response);
+                    const { vm } = await DefaultRubyVM(module);
+                    this.vm = vm
+                }
+                
+                run() {
+                    const code = this.editor.getValue()
+                    const result = this.vm.eval(`
+                        begin
+                            ${code}
+
+                            count = 0
+                            (testcases = [
+                                ['[1,2,3,4,1,2,4,8,1,4,9,16].sort_by_least_frequency', [3, 8, 9, 16, 2, 2, 1, 1, 1, 4, 4, 4]],
+                                ['[1,2,3,4,1,2,4,8,1,4,9,16].sort_by_most_frequency', [1, 1, 1, 4, 4, 4, 2, 2, 3, 8, 9, 16]],
+                            ]).map { |func, expected|
+                                reality = eval(func)
+                                reality == expected ? (count += 1) && "assert_equal #{func}, #{expected} # OK" : "assert_equal #{func}, #{expected} # FAILED get: #{reality.nil? ? 'nil' : reality}"
+                            }
+                            .join('\n') + "\n--------------------------------------\nOK: #{count}, FAILED: #{testcases.size - count}"
+                        rescue => error
+                            error
+                        end
+                    `);
+                
+                    document.getElementById('result').textContent = result
+                }
+            })
+      </script> 
+    </head>
+  
+    <body>
+        <div data-controller="codekata" class="page">
+            <textarea class="kata" readonly>
+sorting-an-array-by-frequency-of-appearance
+Ruby Cookbook
+
+You want to sort an array so that its least(most)-frequently-appearing items come first.
+
+[1,2,3,4,1,2,4,8,1,4,9,16].sort_by_least_frequency
+# => [3, 8, 9, 16, 2, 2, 1, 1, 1, 4, 4, 4]
+
+[1,2,3,4,1,2,4,8,1,4,9,16].sort_by_most_frequency
+# => [1, 1, 1, 4, 4, 4, 2, 2, 3, 8, 9, 16]
+
+            </textarea>
+            <div class="solution">
+                <textarea id="editor"></textarea>
+                <button data-action="click->codekata#run" class="run">run</button>
+                <textarea id="result" class="result" readonly>
+assert_equal [1,2,3,4,1,2,4,8,1,4,9,16].sort_by_least_frequency, [3, 8, 9, 16, 2, 2, 1, 1, 1, 4, 4, 4]
+assert_equal [1,2,3,4,1,2,4,8,1,4,9,16].sort_by_most_frequency, [1, 1, 1, 4, 4, 4, 2, 2, 3, 8, 9, 16]
+
+                </textarea>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="./index.html">./ruby-kata-list</a><span>/sorting-an-array-by-frequency-of-appearance</span>
+        </div>
+    </body>
+</html>
