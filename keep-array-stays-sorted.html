@@ -3,9 +3,11 @@
     <head>
         <title>Kata</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
         <link rel="stylesheet" href="./codekata.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/keymap/sublime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/comment/comment.min.js"></script>
         <script src="https://codemirror.net/mode/ruby/ruby.js"></script>
         <script type="module">
             import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.5.0/dist/browser/+esm";
@@ -19,11 +21,14 @@
                 }
 
                 async setup() {
-                    console.log(document.getElementById('editor'))
-                    console.log(CodeMirror)
                     this.editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
                         mode: "ruby",
                         lineNumbers: true,
+                        keyMap: 'sublime',
+                        extraKeys: {
+                            "Alt-Up": "swapLineUp",
+                            "Alt-Down": "swapLineDown",
+                        }
                     });
                     this.editor.setValue(`# code-kata
 class SortedArray
