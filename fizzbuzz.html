@@ -15,6 +15,28 @@
 
             window.Stimulus = Application.start()
 
+            Stimulus.register("testcases", class extends Controller {
+                static values = { url: String }
+
+                connect() {
+                    this.load()
+                }
+
+                load() {
+                    console.log("load ...")
+                    fetch(this.urlValue)
+                        .then(response => {
+                            console.log(response)
+                            response.text()
+                        })
+                        .then(html => {
+                            console.log(html)
+                            this.element.innerHTML = html
+                        })
+                        .catch(error => console.log(error))
+                }
+            })
+
             Stimulus.register("codekata", class extends Controller {
                 connect() {
                     this.setup()
@@ -78,7 +100,7 @@ For numbers which are multiples of both three and five print "FizzBuzz".
             <div class="solution">
                 <textarea id="editor"></textarea>
                 <button data-action="click->codekata#run" class="run">run</button>
-                <textarea id="result" class="result" readonly>
+                <textarea id="result" class="result" data-controller="testcases" data-testcases-url-value="./fizzbuzz/testcases.txt">
                 </textarea>
             </div>
         </div>
