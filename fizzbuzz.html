@@ -48,7 +48,7 @@
                         }
                     });
                     this.editor.setValue(`# code-kata
-def fizzbuzz(length)
+def fizzbuzz(n)
 
 end
                     `)
@@ -60,14 +60,15 @@ end
                 }
                 
                 async run() {
-                    const testHelper = await fetch("https://ruby-kata.github.io/test_helper/assertion.rb")
+                    const testHelperResponse = await fetch("https://ruby-kata.github.io/test_helper/assertion.rb")
+                    const testHelperCode = await testHelperResponse.text()
                     const code = this.editor.getValue()
                     const testcases = document.getElementById('testcases').value
                     const result = this.vm.eval(`
                         begin
                             ${code}
 
-                            ${testHelper.text()}
+                            ${testHelperCode}
 
                             run('${testcases}')
                         rescue => error
@@ -85,9 +86,11 @@ end
             <textarea class="kata" readonly>
 fizzbuzz
 
-Write a program that prints the numbers from 1 to 100. 
+Write a program that prints the numbers from 1 to n. 
 But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz". 
 For numbers which are multiples of both three and five print "FizzBuzz".
+
+For example with n = 100:
 
 "1,2,Fizz,4,Buzz,Fizz,7,8,Fizz,Buzz,11,Fizz,13,14,FizzBuzz,16,...,Buzz,Fizz,97,98,Fizz,Buzz"
 
