@@ -14,5 +14,5 @@ def run(testcases)
             eval(testcase)
             nil
         end
-    end.compact.join("\n")
+    end.compact.join("\n\n")
 end
