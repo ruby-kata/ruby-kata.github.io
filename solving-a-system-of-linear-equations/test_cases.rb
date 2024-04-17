@@ -1,0 +1,1 @@
+assert_equal solve_linear_equations(["2x + 10y + 8z = 54", "7y + 4z = 30", "5x + 5y + 5z = 35"]), {x: 1, y: 2, z: 4}

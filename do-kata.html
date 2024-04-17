@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Kata</title>
+        <title>ruby-kata</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
         <link rel="stylesheet" href="./codekata.css">
@@ -13,6 +13,8 @@
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             const kata = urlParams.get('kata')
+
+            document.getElementById('kata-name').textContent = `/${kata}`
 
             import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.5.0/dist/browser/+esm";
             import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
@@ -27,7 +29,7 @@
                 }
 
                 load() {
-                    fetch(`https://ruby-kata.github.io/${kata}/${this.fileValue}`)
+                    fetch(`https://ruby-kata.github.io/${kata}/${this.fileValue}`, {mode: "no-cors"})
                         .then(response => response.text())
                         .then(content => {
                             this.element.value = content
@@ -52,7 +54,7 @@
                         }
                     });
                 
-                    const initCodeResponse = await fetch(`https://ruby-kata.github.io/${kata}/init_code.rb`)
+                    const initCodeResponse = await fetch(`https://ruby-kata.github.io/${kata}/init_code.rb`, {mode: "no-cors"})
                     const initCode = await initCodeResponse.text()
                     this.editor.setValue(initCode)
 
@@ -63,7 +65,7 @@
                 }
                 
                 async run() {
-                    const testHelperResponse = await fetch("https://ruby-kata.github.io/test_helper/assertion.rb")
+                    const testHelperResponse = await fetch("https://ruby-kata.github.io/test_helper/assertion.rb", {mode: "no-cors"})
                     const testHelperCode = await testHelperResponse.text()
                     const code = this.editor.getValue()
                     const testcases = document.getElementById('testcases').value
@@ -73,7 +75,7 @@
 
                             ${testHelperCode}
 
-                            run('${testcases}')
+                            run(%(${testcases}))
                         rescue => error
                             error
                         end
@@ -100,7 +102,7 @@
         </div>
 
         <div class="footer">
-            <a href="./index.html">./ruby-kata-list</a><span>/fizzbuzz</span>
+            <a href="./index.html">./ruby-kata-list</a><span id="kata-name"></span>
         </div>
     </body>
 </html>

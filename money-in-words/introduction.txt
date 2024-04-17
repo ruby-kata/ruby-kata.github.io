@@ -1,0 +1,27 @@
+money-in-words
+
+Write a method that convert money to its English words representation.
+
+For example:
+
+money_in_words('$1') 
+# one dollar
+
+money_in_words('$0.01') 
+# one cent
+
+money_in_words('$8.03') 
+# eight dollars, three cents
+
+money_in_words('$2.53') 
+# two dollars, fifty-three cents
+
+money_in_words('$0.22') 
+# twenty-two cents
+
+money_in_words('$73.75') 
+# seventy-three dollars, seventy-five cents
+
+money_in_words('$123456.50') 
+# one hundred and twenty-three thousand four hundred and fifty-six dollars, fifty cents
+

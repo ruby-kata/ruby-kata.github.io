@@ -1,0 +1,11 @@
+time-duration
+
+The activesupport gem, a prerequisite of Rubyon Rails, defines many useful functions on Numeric and Time for calculating time duration:
+
+1.day.ago
+2.weeks.ago
+1.month.from_now
+2.weeks.since(Time.local(2024, 4, 13))
+
+Could you re-implement those functions ?
+

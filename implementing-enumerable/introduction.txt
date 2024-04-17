@@ -1,0 +1,17 @@
+implementing-enumerable
+Ruby Cookbook
+
+You want to give a class all the useful iterator and iteration-related features of Ruby’s
+arrays (sort, detect, inject, and so on), but your class can’t be a subclass of Array.
+You don’t want to define all those methods yourself.
+
+ll = LinkedList.new
+ll << 1 << 2 << 3 << 4
+ll.collect { |x| x.even? } # => [false, true, false, true]
+ll.detect { |x| x > 3 } # => 4
+ll.map { |x| x ** 2 } # => [1, 4, 9, 16]
+ll.each_with_index { |x, i| puts "Element #{i} is #{x}" }
+# Element 0 is 1
+# Element 1 is 2
+# Element 2 is 3
+# Element 3 is 4

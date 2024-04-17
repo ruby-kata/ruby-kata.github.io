@@ -1,0 +1,19 @@
+text-full-justify
+
+Given a text with max_width, format the text such that each line has exactly max_width characters and is fully (left and right) justified. 
+For the last line of text, it should be left-justified.
+
+For example:
+
+"This is an example of text justification.".full_justify(16)
+# => "This    is    an\nexample  of text\njustification.  "
+
+"What must be acknowledgment shall be".full_justify(16)
+# => "What   must   be\nacknowledgment  \nshall be        "
+
+"Science is what we understand well enough to explain to a computer. Art is everything else we do".full_justify(20)
+# =>   "Science  is  what we\nunderstand      well\nenough to explain to\na  computer.  Art is\neverything  else  we\ndo                  "
+
+
+reference: https://leetcode.com/problems/text-justification
+

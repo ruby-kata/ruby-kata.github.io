@@ -1,0 +1,10 @@
+counting-days
+
+Write a method that return number of days of the given month/year.
+
+For example:
+
+days_in_month(1, 2024) # 31
+days_in_month(2, 2024) # 29
+days_in_month(2, 2025) # 28
+ 

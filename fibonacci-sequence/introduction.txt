@@ -1,0 +1,14 @@
+fibonacci-sequence
+
+You want to generate a sequence of fibonacci numbers
+
+fib = Fibonacci.new
+fib.succ # => 1
+fib.succ # => 1
+fib.succ # => 2
+fib.succ # => 3
+
+Fibonacci[0..3] # [1,1,2,3]
+Fibonacci[..4]  # [1,1,2,3,5]
+Fibonacci[6]    # => 13
+
