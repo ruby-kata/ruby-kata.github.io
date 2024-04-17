@@ -67,11 +67,9 @@ end
                         begin
                             ${code}
 
-                            ${testHelper}
+                            ${testHelper.text()}
 
-                            '${testcases}'.split('\n').map do |testcase|
-                                "#{testcase} # #{eval(testcase)}" unless testcase.empty?
-                            end.compact.join("\n")
+                            run('${testcases}')
                         rescue => error
                             error
                         end
@@ -96,7 +94,7 @@ For numbers which are multiples of both three and five print "FizzBuzz".
             </textarea>
             <div class="solution">
                 <textarea id="editor"></textarea>
-                <textarea id="testcases" class="result" data-controller="testcases" data-testcases-url-value="https://ruby-kata.github.io/fizzbuzz/testcases.txt">
+                <textarea id="testcases" class="result" data-controller="testcases" data-testcases-url-value="https://ruby-kata.github.io/fizzbuzz/testcases.rb">
                 </textarea>
                 <button data-action="click->codekata#run" class="run">run</button>
                 <textarea id="result" class="result" readonly>
