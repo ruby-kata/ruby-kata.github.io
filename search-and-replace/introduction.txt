@@ -1,0 +1,14 @@
+search-and-replace
+Replacing Multiple Patterns in a Single Pass - Ruby Cookbook
+
+You want to perform multiple, simultaneous search-and-replace operations on a string.
+
+For example:
+
+"GO HOME!".mgsub([[/.*GO/i, 'Home'], [/home/i, 'is where the heart is']])
+# => "Home is where the heart is!"
+
+"Here is number #123".mgsub([[/[a-z]/i, '#'], [/#/, 'P']])
+# => "#### ## ###### P123"
+
+

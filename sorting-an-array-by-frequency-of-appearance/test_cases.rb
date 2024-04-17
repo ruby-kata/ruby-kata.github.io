@@ -1,0 +1,2 @@
+assert_equal [1,2,3,4,1,2,4,8,1,4,9,16].sort_by_least_frequency, [3, 8, 9, 16, 2, 2, 1, 1, 1, 4, 4, 4]
+assert_equal [1,2,3,4,1,2,4,8,1,4,9,16].sort_by_most_frequency, [1, 1, 1, 4, 4, 4, 2, 2, 3, 8, 9, 16]

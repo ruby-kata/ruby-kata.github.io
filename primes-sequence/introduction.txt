@@ -1,0 +1,14 @@
+primes-sequence
+
+You want to generate a sequence of prime numbers
+
+primes_sequence = PrimesSequence.new
+primes_sequence.succ # => 2
+primes_sequence.succ # => 3
+primes_sequence.succ # => 5
+primes_sequence.succ # => 7
+
+PrimesSequence[0..3] # [2,3,5,7]
+PrimesSequence[..4]  # [2,3,5,7,11]
+PrimesSequence[6]    # => 17
+

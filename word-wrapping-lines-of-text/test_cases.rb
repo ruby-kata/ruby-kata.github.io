@@ -1,0 +1,2 @@
+assert_equal wrap('This text is not too short to be wrapped.', 20), 'This text is not too\nshort to be wrapped.\n'
+assert_equal wrap('These ten-character columns are stifling my creativity!', 10), 'These\nten-character\ncolumns\nare\nstifling\nmy\ncreativity!\n'

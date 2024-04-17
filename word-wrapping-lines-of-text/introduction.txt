@@ -1,0 +1,22 @@
+Word-Wrapping Lines of Text - Ruby Cookbook
+
+You want to turn a string full of miscellaneous whitespace into a string formatted
+with linebreaks at appropriate intervals, so that the text can be displayed in a win-
+dow or sent as an email.
+
+For example:
+
+puts wrap("This text is not too short to be wrapped.", 20)
+# This text is not too
+# short to be wrapped.
+
+puts wrap("These ten-character columns are stifling my creativity!", 10)
+# These
+# ten-character
+# columns
+# are
+# stifling
+# my
+# creativity!
+
+

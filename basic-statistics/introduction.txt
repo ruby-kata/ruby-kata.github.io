@@ -1,0 +1,21 @@
+basic-statistic
+
+Statistics is a field of mathematics that pertains to data analysis. Statistical methods and equations can be applied to a data set in order to analyze and interpret results, explain variations in the data, or predict future data. 
+
+A few examples of statistical information we can calculate are:
+
+  + Average value (mean)
+  + Most frequently occurring value (mode)
+  + On average, how much each measurement deviates from the mean (standard deviation of the mean)
+  + Span of values over which your data set occurs (range), and
+  + Midpoint between the lowest and highest value of the set (median)
+
+For example:
+
+ the mean of [1,2,2,3,5] is 2.6
+ the median of [1,2,2,3,5] is 2
+ the standard_deviation of [1,2,2,3,5] is 1.52
+ the only mode of [1,1,2,2,3,4,4,4,4,4] is 4 
+ modes of [1,1,2,2,3,4,4] are [1,2,4] 
+ there is no modes in [1,2,3]
+ 

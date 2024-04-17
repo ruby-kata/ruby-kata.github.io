@@ -1,0 +1,16 @@
+solving-a-system-of-linear-equations
+Ruby Cookbook
+
+You have a number of linear equations (that is, equations that look like “2x + 10y+ 8z = 54”), 
+and you want to figure out the solution: the values of x, y, and z. 
+
+For example:
+
+    solve_linear_equations([
+        "2x + 10y + 8z = 54",
+        "7y + 4z = 30",
+        "5x + 5y + 5z = 35"
+    ])
+    # => {x: 1, y: 2, z: 4}
+
+

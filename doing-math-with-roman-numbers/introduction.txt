@@ -1,0 +1,30 @@
+doing-math-with-roman-numbers
+Ruby Cookbook
+
+You want to convert between Arabic and Roman numbers, 
+or do arithmetic with Roman numbers and get Roman numbers as your result.
+
+For example:
+
+    72.to_roman # => LXXII
+    444.to_roman # => CDXLIV
+    1979.to_roman # => MCMLXXIX
+    'MCMXLVIII'.to_roman # => MCMXLVIII
+    Roman.to_arabic('MCMLXXIX') # => 1979
+    'MMI'.to_roman.to_arabic # => 2001
+    'MMI'.to_roman + 3 # => MMIV
+    'MCMXLVIII'.to_roman # => MCMXLVIII
+    612.to_roman * 3.to_roman # => MDCCCXXXVI
+    (612.to_roman * 3).divmod('VII'.to_roman) # => [CCLXII, II]
+    612.to_roman * 10000 # => 6120000 # Too big
+    612.to_roman * 0 # => 0 # Too small
+    'MCMXCIX'.to_roman.succ # => MM
+    ('I'.to_roman..'X'.to_roman).collect # => [I, II, III, IV, V, VI, VII, VIII, IX, X]
+    'IIII'.to_roman # ArgumentError: Invalid Roman number: IIII
+    'IVI'.to_roman # ArgumentError: Invalid Roman number: IVI
+    'IXV'.to_roman # ArgumentError: Invalid Roman number: IXV
+    'MCMM'.to_roman # ArgumentError: Invalid Roman number: MCMM
+    'CIVVM'.to_roman # ArgumentError: Invalid Roman number: CIVVM
+    -10.to_roman # RangeError: -10 can't be represented as a Roman number.
+    50000.to_roman # RangeError: 50000 can't be represented as a Roman number.
+ 
