@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kata</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
+        <link rel="stylesheet" href="./codekata.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/keymap/sublime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/comment/comment.min.js"></script>
+        <script src="https://codemirror.net/mode/ruby/ruby.js"></script>
+        <script type="module">
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const kata = urlParams.get('kata')
+
+            import { DefaultRubyVM } from "https://cdn.jsdelivr.net/npm/@ruby/wasm-wasi@2.5.0/dist/browser/+esm";
+            import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+
+            window.Stimulus = Application.start()
+
+            Stimulus.register("lazy", class extends Controller {
+                static values = { file: String }
+
+                connect() {
+                    this.load()
+                }
+
+                load() {
+                    fetch(`https://ruby-kata.github.io/${kata}/${this.fileValue}`)
+                        .then(response => response.text())
+                        .then(content => {
+                            this.element.value = content
+                        })
+                        .catch(error => console.log(error))
+                }
+            })
+
+            Stimulus.register("codekata", class extends Controller {
+                connect() {
+                    this.setup()
+                }
+
+                async setup() {
+                    this.editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+                        mode: "ruby",
+                        lineNumbers: true,
+                        keyMap: 'sublime',
+                        extraKeys: {
+                            "Alt-Up": "swapLineUp",
+                            "Alt-Down": "swapLineDown",
+                        }
+                    });
+                
+                    const initCodeResponse = await fetch(`https://ruby-kata.github.io/${kata}/init_code.rb`)
+                    const initCode = await initCodeResponse.text()
+                    this.editor.setValue(initCode)
+
+                    const response = await fetch("https://cdn.jsdelivr.net/npm/@ruby/3.3-wasm-wasi@2.5.0/dist/ruby+stdlib.wasm");
+                    const module = await WebAssembly.compileStreaming(response);
+                    const { vm } = await DefaultRubyVM(module);
+                    this.vm = vm
+                }
+                
+                async run() {
+                    const testHelperResponse = await fetch("https://ruby-kata.github.io/test_helper/assertion.rb")
+                    const testHelperCode = await testHelperResponse.text()
+                    const code = this.editor.getValue()
+                    const testcases = document.getElementById('testcases').value
+                    const result = this.vm.eval(`
+                        begin
+                            ${code}
+
+                            ${testHelperCode}
+
+                            run('${testcases}')
+                        rescue => error
+                            error
+                        end
+                    `);
+                    document.getElementById('result').value = result
+                }
+            })
+      </script> 
+    </head>
+  
+    <body>
+        <div data-controller="codekata" class="page">
+            <textarea class="kata" data-controller="lazy" data-lazy-file-value="introduction.txt" readonly></textarea>
+
+            <div class="solution">
+                <textarea id="editor"></textarea>
+
+                <textarea id="testcases" class="result" data-controller="lazy" data-lazy-file-value="test_cases.rb"></textarea>
+
+                <button data-action="click->codekata#run" class="run">run</button>
+                
+                <textarea id="result" class="result" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="./index.html">./ruby-kata-list</a><span>/fizzbuzz</span>
+        </div>
+    </body>
+</html>
