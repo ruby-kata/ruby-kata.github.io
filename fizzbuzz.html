@@ -29,9 +29,9 @@
                             console.log(response)
                             response.text()
                         })
-                        .then(html => {
-                            console.log(html)
-                            this.element.innerHTML = html
+                        .then(text => {
+                            console.log(text)
+                            this.element.textContent = text
                         })
                         .catch(error => console.log(error))
                 }
