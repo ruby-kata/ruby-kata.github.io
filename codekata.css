@@ -55,11 +55,11 @@
 
 .result {
     width: 99%;
-    height: 35vh;
+    height: 20vh;
     border-style: solid;
     border-color: red;
     border-width: 1px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .CodeMirror {
