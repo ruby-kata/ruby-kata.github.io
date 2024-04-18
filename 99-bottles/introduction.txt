@@ -1,0 +1,14 @@
+99 Bottles of Beer
+
+Write the code that will output the lyrics to the song 99 Bottles of Beer.
+
+Goals: Practical Object-Oriented Design
+
+It turns out that everything you need to know about Object-Oriented Design (OOD) can be learned from the 99 Bottles of Beer song.
+Well, perhaps not everything, but quite certainly, a great many things.
+
+The song is simultaneously easy to understand and full of hidden complexity, which makes it the perfect skeleton upon which to hang lessons in OOD.
+
+
+reference: https://sandimetz.com/99bottles
+ 
