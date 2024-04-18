@@ -1,0 +1,24 @@
+ruby-gem versions
+
+- Validate gem-versions
+  Should raise error with invalid version input: "junk", "1.0\n2.0", 1..2, "1.2\ 3.4"
+
+- Given two gem-versions, compare them:
+
+GemVersion.new("1.0") equal to  GemVersion.new("1.0.0")
+GemVersion.new("1.9.3") less than GemVersion.new("1.9.3.1")
+GemVersion.new("1.9.3") larger than GemVersion.new("1.9.2.99")
+GemVersion.new("1.8.2") larger than GemVersion.new("1.8.2.a")
+GemVersion.new("1.8.2.b") larger than GemVersion.new("1.8.2.a")
+GemVersion.new("1.8.2.a10") larger than GemVersion.new("1.8.2.a9")
+GemVersion.new("1.0.0-alpha") less than GemVersion.new("1.0.0-alpha.1")
+GemVersion.new("1.0.0-alpha.1") less than GemVersion.new("1.0.0-beta.1")
+GemVersion.new("1.0.0-beta.11") less than GemVersion.new("1.0.0-rc.1")
+GemVersion.new("1.0.0") larger than GemVersion.new("1.0.0-rc1")
+
+
+- Support approximate ~>
+
+GemVersion.new("1.0") is approximately equal to GemVersion.new("~> 1.0")
+GemVersion.new("1.0.0") is approximately equal to GemVersion.new("~> 1.0")
+GemVersion.new("1.0.1") is approximately equal to GemVersion.new("~> 1.0")
